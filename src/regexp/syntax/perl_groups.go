@@ -12,8 +12,7 @@ var code1 = []rune{ /* \d */
 }
 
 var code2 = []rune{ /* \s */
-	0x9, 0xa,
-	0xc, 0xd,
+	0x9, 0xd,
 	0x20, 0x20,
 }
 
@@ -24,6 +23,23 @@ var code3 = []rune{ /* \w */
 	0x61, 0x7a,
 }
 
+var code4 = []rune{ /* \h */
+	0x9, 0x9,
+	0x20, 0x20,
+	0xa0, 0xa0,
+	0x1680, 0x1680,
+	0x2000, 0x200a,
+	0x202f, 0x202f,
+	0x205f, 0x205f,
+	0x3000, 0x3000,
+}
+
+var code5 = []rune{ /* \v */
+	0xa, 0xd,
+	0x85, 0x85,
+	0x2028, 0x2029,
+}
+
 var perlGroup = map[string]charGroup{
 	`\d`: {+1, code1},
 	`\D`: {-1, code1},
@@ -31,104 +47,108 @@ var perlGroup = map[string]charGroup{
 	`\S`: {-1, code2},
 	`\w`: {+1, code3},
 	`\W`: {-1, code3},
+	`\h`: {+1, code4},
+	`\H`: {-1, code4},
+	`\v`: {+1, code5},
+	`\V`: {-1, code5},
 }
-var code4 = []rune{ /* [:alnum:] */
+var code6 = []rune{ /* [:alnum:] */
 	0x30, 0x39,
 	0x41, 0x5a,
 	0x61, 0x7a,
 }
 
-var code5 = []rune{ /* [:alpha:] */
+var code7 = []rune{ /* [:alpha:] */
 	0x41, 0x5a,
 	0x61, 0x7a,
 }
 
-var code6 = []rune{ /* [:ascii:] */
+var code8 = []rune{ /* [:ascii:] */
 	0x0, 0x7f,
 }
 
-var code7 = []rune{ /* [:blank:] */
+var code9 = []rune{ /* [:blank:] */
 	0x9, 0x9,
 	0x20, 0x20,
 }
 
-var code8 = []rune{ /* [:cntrl:] */
+var code10 = []rune{ /* [:cntrl:] */
 	0x0, 0x1f,
 	0x7f, 0x7f,
 }
 
-var code9 = []rune{ /* [:digit:] */
+var code11 = []rune{ /* [:digit:] */
 	0x30, 0x39,
 }
 
-var code10 = []rune{ /* [:graph:] */
+var code12 = []rune{ /* [:graph:] */
 	0x21, 0x7e,
 }
 
-var code11 = []rune{ /* [:lower:] */
+var code13 = []rune{ /* [:lower:] */
 	0x61, 0x7a,
 }
 
-var code12 = []rune{ /* [:print:] */
+var code14 = []rune{ /* [:print:] */
 	0x20, 0x7e,
 }
 
-var code13 = []rune{ /* [:punct:] */
+var code15 = []rune{ /* [:punct:] */
 	0x21, 0x2f,
 	0x3a, 0x40,
 	0x5b, 0x60,
 	0x7b, 0x7e,
 }
 
-var code14 = []rune{ /* [:space:] */
+var code16 = []rune{ /* [:space:] */
 	0x9, 0xd,
 	0x20, 0x20,
 }
 
-var code15 = []rune{ /* [:upper:] */
+var code17 = []rune{ /* [:upper:] */
 	0x41, 0x5a,
 }
 
-var code16 = []rune{ /* [:word:] */
+var code18 = []rune{ /* [:word:] */
 	0x30, 0x39,
 	0x41, 0x5a,
 	0x5f, 0x5f,
 	0x61, 0x7a,
 }
 
-var code17 = []rune{ /* [:xdigit:] */
+var code19 = []rune{ /* [:xdigit:] */
 	0x30, 0x39,
 	0x41, 0x46,
 	0x61, 0x66,
 }
 
 var posixGroup = map[string]charGroup{
-	`[:alnum:]`:   {+1, code4},
-	`[:^alnum:]`:  {-1, code4},
-	`[:alpha:]`:   {+1, code5},
-	`[:^alpha:]`:  {-1, code5},
-	`[:ascii:]`:   {+1, code6},
-	`[:^ascii:]`:  {-1, code6},
-	`[:blank:]`:   {+1, code7},
-	`[:^blank:]`:  {-1, code7},
-	`[:cntrl:]`:   {+1, code8},
-	`[:^cntrl:]`:  {-1, code8},
-	`[:digit:]`:   {+1, code9},
-	`[:^digit:]`:  {-1, code9},
-	`[:graph:]`:   {+1, code10},
-	`[:^graph:]`:  {-1, code10},
-	`[:lower:]`:   {+1, code11},
-	`[:^lower:]`:  {-1, code11},
-	`[:print:]`:   {+1, code12},
-	`[:^print:]`:  {-1, code12},
-	`[:punct:]`:   {+1, code13},
-	`[:^punct:]`:  {-1, code13},
-	`[:space:]`:   {+1, code14},
-	`[:^space:]`:  {-1, code14},
-	`[:upper:]`:   {+1, code15},
-	`[:^upper:]`:  {-1, code15},
-	`[:word:]`:    {+1, code16},
-	`[:^word:]`:   {-1, code16},
-	`[:xdigit:]`:  {+1, code17},
-	`[:^xdigit:]`: {-1, code17},
+	`[:alnum:]`:   {+1, code6},
+	`[:^alnum:]`:  {-1, code6},
+	`[:alpha:]`:   {+1, code7},
+	`[:^alpha:]`:  {-1, code7},
+	`[:ascii:]`:   {+1, code8},
+	`[:^ascii:]`:  {-1, code8},
+	`[:blank:]`:   {+1, code9},
+	`[:^blank:]`:  {-1, code9},
+	`[:cntrl:]`:   {+1, code10},
+	`[:^cntrl:]`:  {-1, code10},
+	`[:digit:]`:   {+1, code11},
+	`[:^digit:]`:  {-1, code11},
+	`[:graph:]`:   {+1, code12},
+	`[:^graph:]`:  {-1, code12},
+	`[:lower:]`:   {+1, code13},
+	`[:^lower:]`:  {-1, code13},
+	`[:print:]`:   {+1, code14},
+	`[:^print:]`:  {-1, code14},
+	`[:punct:]`:   {+1, code15},
+	`[:^punct:]`:  {-1, code15},
+	`[:space:]`:   {+1, code16},
+	`[:^space:]`:  {-1, code16},
+	`[:upper:]`:   {+1, code17},
+	`[:^upper:]`:  {-1, code17},
+	`[:word:]`:    {+1, code18},
+	`[:^word:]`:   {-1, code18},
+	`[:xdigit:]`:  {+1, code19},
+	`[:^xdigit:]`: {-1, code19},
 }

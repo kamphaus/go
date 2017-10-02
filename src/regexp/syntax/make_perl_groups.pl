@@ -10,6 +10,8 @@
 # figure out what the definition is, it is easier to ask
 # Perl about each letter from 0-128 and write down
 # its answer.
+# For the \h, \v classes we also match letters 129-65536,
+# so that we align with the pcrepattern specification.
 
 @posixclasses = (
 	"[:alnum:]",
@@ -32,6 +34,13 @@
 	"\\d",
 	"\\s",
 	"\\w",
+	"\\h",
+	"\\v",
+);
+
+@unicodeclasses = (
+	"\\h",
+	"\\v",
 );
 
 sub ComputeClass($) {
@@ -39,9 +48,11 @@ sub ComputeClass($) {
   my ($class) = @_;
   my $regexp = "[$class]";
   my $start = -1;
-  for (my $i=0; $i<=129; $i++) {
-    if ($i == 129) { $i = 256; }
-    if ($i <= 128 && chr($i) =~ $regexp) {
+  my $end = 129;
+  if ($class ~~ @unicodeclasses) { $end = 65536; }
+  for (my $i=0; $i<=$end; $i++) {
+    if (!($class ~~ @unicodeclasses) && $i == 129) { $i = 256; }
+	if (($class ~~ @unicodeclasses || $i <= 128) && chr($i) =~ $regexp) {
       if ($start < 0) {
         $start = $i;
       }
