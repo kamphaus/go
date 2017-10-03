@@ -989,6 +989,19 @@ func (p *parser) parsePerlFlags(s string) (rest string, err error) {
 		return t[end+1:], nil
 	}
 
+	// Comment => consume everything until (and including) the next ')'
+	// Through an error if we reach EOF
+	if len(t) > 2 && t[2] == '#' {
+		end := 3
+		for end < len(t) && t[end] != ')' {
+			end++
+		}
+		if end == len(t) {
+			return "", &Error{ErrMissingParen, t}
+		}
+		return t[end+1:], nil
+	}
+
 	// Non-capturing group. Might also twiddle Perl flags.
 	var c rune
 	t = t[2:] // skip (?
