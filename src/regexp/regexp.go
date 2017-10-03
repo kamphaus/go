@@ -66,8 +66,8 @@ package regexp
 
 import (
 	"bytes"
+	"github.com/kamphaus/go/src/regexp/syntax"
 	"io"
-	"regexp/syntax"
 	"strconv"
 	"strings"
 	"sync"

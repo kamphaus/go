@@ -5,8 +5,8 @@
 package regexp
 
 import (
+	"github.com/kamphaus/go/src/regexp/syntax"
 	"reflect"
-	"regexp/syntax"
 	"strings"
 	"testing"
 	"unicode/utf8"

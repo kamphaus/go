@@ -6,7 +6,7 @@ package regexp
 
 import (
 	"bytes"
-	"regexp/syntax"
+	"github.com/kamphaus/go/src/regexp/syntax"
 	"sort"
 	"unicode"
 )

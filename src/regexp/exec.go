@@ -5,8 +5,8 @@
 package regexp
 
 import (
+	"github.com/kamphaus/go/src/regexp/syntax"
 	"io"
-	"regexp/syntax"
 )
 
 // A queue is a 'sparse array' holding pending threads of execution.
